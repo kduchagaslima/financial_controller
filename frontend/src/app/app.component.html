@@ -1,0 +1,25 @@
+<h1>Financial Controller</h1>
+
+<div>
+  <h2>Add Category</h2>
+  <input [(ngModel)]="newCategory" placeholder="Category name">
+  <button (click)="addCategory()">Add</button>
+</div>
+
+<div>
+  <h2>Add Transaction</h2>
+  <select [(ngModel)]="newTransaction.category_id">
+    <option *ngFor="let c of categories" [value]="c.id">{{c.name}}</option>
+  </select>
+  <input [(ngModel)]="newTransaction.description" placeholder="Description">
+  <input [(ngModel)]="newTransaction.amount" type="number" placeholder="Amount">
+  <input [(ngModel)]="newTransaction.date" type="date">
+  <button (click)="addTransaction()">Add</button>
+</div>
+
+<div>
+  <h2>Summary</h2>
+  <div *ngFor="let item of summary">
+    {{item.category}}: {{item.total}}
+  </div>
+</div>
