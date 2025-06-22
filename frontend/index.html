@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FinOps</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Financial Controller</h1>
+  <div id="summary"></div>
+  <div id="report">
+    <h2>Generate Report</h2>
+    <label>Category ID: <input type="number" id="reportCategory" /></label>
+    <label>Start date: <input type="date" id="reportStart" /></label>
+    <label>End date: <input type="date" id="reportEnd" /></label>
+    <button onclick="loadReport()">Run</button>
+    <pre id="reportResult"></pre>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
