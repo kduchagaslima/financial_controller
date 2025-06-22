@@ -7,6 +7,17 @@
 </head>
 <body>
   <h1>Financial Controller</h1>
+  <div id="addExpense">
+    <h2>Add Expense</h2>
+    <label>Category:
+      <select id="expenseCategory"></select>
+      <button onclick="addCategory()">Add Category</button>
+    </label>
+    <label>Description: <input type="text" id="expenseDescription"></label>
+    <label>Amount: <input type="number" id="expenseAmount"></label>
+    <label>Date: <input type="date" id="expenseDate"></label>
+    <button onclick="submitExpense()">Add Expense</button>
+  </div>
   <div id="summary"></div>
   <div id="report">
     <h2>Generate Report</h2>
