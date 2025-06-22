@@ -19,6 +19,7 @@ Open `frontend/index.html` in your browser. The frontend expects the backend to 
 - Summary of expenses by category
 - Add new financial entries when expanding categories
 - On-demand reports filtered by category and period
+- Create custom expense categories and assign them when recording expenses
 
 This is a basic starting point and does not include full authentication or a production-ready setup.
 

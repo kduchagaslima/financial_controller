@@ -27,3 +27,6 @@ class CategorySummary(BaseModel):
     category: str
     total: float
 
+class CategoryCreate(BaseModel):
+    name: str
+

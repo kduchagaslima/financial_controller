@@ -27,6 +27,20 @@ def read_summary(db: Session = Depends(get_db)):
         summaries[cat_name] += transaction
     return [schemas.CategorySummary(category=k, total=v) for k, v in summaries.items()]
 
+
+@app.get("/categories", response_model=list[schemas.Category])
+def read_categories(db: Session = Depends(get_db)):
+    return db.query(models.Category).all()
+
+
+@app.post("/categories", response_model=schemas.Category)
+def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
+    db_cat = models.Category(name=category.name)
+    db.add(db_cat)
+    db.commit()
+    db.refresh(db_cat)
+    return db_cat
+
 @app.post("/transactions", response_model=schemas.Transaction)
 def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
     db_trans = models.Transaction(**transaction.dict())

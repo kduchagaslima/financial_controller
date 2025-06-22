@@ -1,3 +1,20 @@
+let categories = [];
+
+async function loadCategories() {
+  const res = await fetch('/categories');
+  categories = await res.json();
+  const select = document.getElementById('expenseCategory');
+  if (select) {
+    select.innerHTML = '';
+    categories.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name;
+      select.appendChild(opt);
+    });
+  }
+}
+
 async function loadSummary() {
   const res = await fetch('/categories/summary');
   const data = await res.json();
@@ -26,15 +43,53 @@ async function addTransaction(categoryName) {
   const description = prompt('Description');
   const amount = parseFloat(prompt('Amount'));
   const dateStr = prompt('Date (YYYY-MM-DD)');
-  const categoryIdRes = await fetch(`/categories/summary`);
-  const categories = await categoryIdRes.json();
-  const catObj = categories.find(c => c.category === categoryName);
+  const catObj = categories.find(c => c.name === categoryName);
+  if (!catObj) {
+    alert('Category not found');
+    return;
+  }
   const resp = await fetch('/transactions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ description, amount, date: dateStr, category_id: catObj.id })
   });
   if (resp.ok) loadSummary();
+}
+
+async function addCategory() {
+  const name = prompt('Category name');
+  if (!name) return;
+  const res = await fetch('/categories', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name })
+  });
+  if (res.ok) {
+    await loadCategories();
+    await loadSummary();
+  } else {
+    alert('Failed to add category');
+  }
+}
+
+async function submitExpense() {
+  const categoryId = document.getElementById('expenseCategory').value;
+  const description = document.getElementById('expenseDescription').value;
+  const amount = parseFloat(document.getElementById('expenseAmount').value);
+  const date = document.getElementById('expenseDate').value;
+  const res = await fetch('/transactions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ description, amount, date, category_id: parseInt(categoryId) })
+  });
+  if (res.ok) {
+    document.getElementById('expenseDescription').value = '';
+    document.getElementById('expenseAmount').value = '';
+    document.getElementById('expenseDate').value = '';
+    await loadSummary();
+  } else {
+    alert('Failed to add expense');
+  }
 }
 
 async function loadReport() {
@@ -50,4 +105,5 @@ async function loadReport() {
   document.getElementById('reportResult').textContent = JSON.stringify(data, null, 2);
 }
 
+loadCategories();
 loadSummary();
