@@ -1,8 +1,8 @@
 # FinOps Controller
 
-This project is a minimal example of a financial control web application. It uses a FastAPI backend and a small frontend. Authentication integration should be implemented using Authentik or social OAuth providers (GitHub/Facebook) – currently a placeholder endpoint is provided.
+This project is a minimal example of a financial control web application. It uses a small Go backend and an Angular frontend. Authentication integration should be implemented using Authentik or social OAuth providers (GitHub/Facebook) – currently a placeholder endpoint is provided.
 
-The backend now runs on PostgreSQL and can be started together with the database (and an optional Angular frontend) using Docker Compose.
+The backend stores data in memory and can be started together with a PostgreSQL instance (unused for now) and the Angular frontend using Docker Compose.
 
 ## Running with Docker
 
@@ -17,9 +17,8 @@ The API will be available at `http://localhost:8000` and the Angular frontend at
 For development without Docker you can still run the backend manually:
 
 ```bash
-cd backend
-pip install -r requirements.txt
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/finops uvicorn app:app --reload
+cd backend-go
+go run main.go
 ```
 
 The old static HTML frontend is kept for reference in `frontend-static`.

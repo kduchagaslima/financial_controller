@@ -9,9 +9,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
   backend:
-    build: ./backend
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/finops
+    build: ./backend-go
     depends_on:
       - db
     ports:
